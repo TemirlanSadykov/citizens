@@ -4,7 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @Entity
@@ -19,12 +19,12 @@ public class User extends AbstractEntity {
     private String name;
 
     @NotBlank(message = "Обязательное поле")
-    @Column(length = 32)
-    private Integer inn;
+    @Column(length = 14)
+    private String inn;
 
-    @NotBlank(message = "Обязательное поле")
+    @NotNull(message = "Обязательное поле")
     @Column
-    private LocalDateTime birth;
+    private Date birth;
 
     @NotBlank(message = "Обязательное поле")
     @Column(length = 128)

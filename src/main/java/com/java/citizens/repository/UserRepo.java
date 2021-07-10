@@ -12,7 +12,7 @@ import java.util.Optional;
 @Transactional
 public interface UserRepo extends ExCustomRepository<User, QUser, Long> {
 
-    Optional<User> findByLogin(String login);
+    boolean existsByLoginAndRoleId(String login, Long id);
 
     @Override
     default void customize(QuerydslBindings querydslBindings, QUser qUser) {

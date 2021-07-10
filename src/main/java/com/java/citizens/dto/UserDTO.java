@@ -1,14 +1,10 @@
 package com.java.citizens.dto;
 
-import com.java.citizens.entity.Document;
-import com.java.citizens.entity.Role;
 import com.java.citizens.entity.User;
+import com.java.citizens.service.Converter;
 import lombok.*;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
+import javax.validation.constraints.*;
 
 @Data
 @Builder(access = AccessLevel.PRIVATE)
@@ -23,10 +19,10 @@ public class UserDTO {
     private String name;
 
     @NotBlank(message = "Обязательное поле")
-    @Max(value = 32)
-    private int inn;
+    @Size(max = 14, min = 14, message = "Требуется ввести 14 цифр")
+    private String inn;
 
-    @NotBlank(message = "Обязательное поле")
+    @NotNull(message = "Обязательное поле")
     private String birth;
 
     @NotBlank(message = "Обязательное поле")
@@ -41,20 +37,22 @@ public class UserDTO {
     @Size(min = 8, max = 64, message = "Пароль должен содержать минимум 8 символов, максимум 64")
     private String password;
 
+    private String roleId;
+
     private RoleDTO roleDTO;
-    private Document document;
+    private DocumentDTO documentDTO;
 
     public static UserDTO from(User user) {
         return builder()
                 .id(user.getId())
                 .name(user.getName())
                 .inn(user.getInn())
-                .birth(user.getBirth().toString())
+                .birth(Converter.convertDateToString(user.getBirth()))
                 .place(user.getPlace())
                 .login(user.getLogin())
                 .password(user.getPassword())
                 .roleDTO(RoleDTO.from(user.getRole()))
-                .document(user.getDocument())
+                .documentDTO(DocumentDTO.from(user.getDocument()))
                 .build();
     }
 }

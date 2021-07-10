@@ -2,6 +2,7 @@ package com.java.citizens.dto;
 
 import com.java.citizens.entity.Doctype;
 import com.java.citizens.entity.Document;
+import com.java.citizens.service.Converter;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
@@ -19,7 +20,6 @@ public class DocumentDTO {
     @Size(max = 64)
     private String number;
 
-    @NotBlank(message = "Обязательное поле")
     private Doctype doctype;
 
     @NotBlank(message = "Обязательное поле")
@@ -32,14 +32,18 @@ public class DocumentDTO {
     @NotBlank(message = "Обязательное поле")
     private String expiration;
 
+    private String doctypeName;
+
+    private String login;
+
     public static DocumentDTO from(Document document) {
         return builder()
                 .id(document.getId())
                 .number(document.getNumber())
                 .doctype(document.getDoctype())
                 .giver(document.getGiver())
-                .issue(document.getIssue().toString())
-                .expiration(document.getExpiration().toString())
+                .issue(Converter.convertDateToString(document.getIssue()))
+                .expiration(Converter.convertDateToString(document.getExpiration()))
                 .build();
     }
 }

@@ -21,13 +21,13 @@ public class UserDetailsServiceImp implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, InternalAuthenticationServiceException, NoSuchElementException {
 
-        if(userRepo.findOne(QUser.user.login.eq(username)).isPresent()){
+        if (userRepo.findOne(QUser.user.login.eq(username)).isPresent()) {
             User user = userRepo.findOne(QUser.user.login.eq(username)).get();
             UserBuilder builder;
-                builder = org.springframework.security.core.userdetails.User.withUsername(username);
-                builder.password(user.getPassword());
-                builder.roles(user.getRole().getName());
-                return builder.build();
+            builder = org.springframework.security.core.userdetails.User.withUsername(username);
+            builder.password(user.getPassword());
+            builder.roles(user.getRole().getName());
+            return builder.build();
         }
 
         throw new UsernameNotFoundException("User not found.");

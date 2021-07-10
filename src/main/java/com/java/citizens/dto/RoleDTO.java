@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 @Builder(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class RoleDTO{
+public class RoleDTO {
 
     private Long id;
 

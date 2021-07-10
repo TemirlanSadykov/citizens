@@ -2,8 +2,6 @@ package com.java.citizens.repository;
 
 import com.java.citizens.entity.Document;
 import com.java.citizens.entity.QDocument;
-import com.java.citizens.entity.QUser;
-import com.java.citizens.entity.User;
 import org.springframework.data.querydsl.binding.QuerydslBindings;
 
 import javax.transaction.Transactional;

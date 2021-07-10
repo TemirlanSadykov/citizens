@@ -13,7 +13,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Table(name = "roles")
-public class Role extends AbstractEntity{
+public class Role extends AbstractEntity {
 
     @NotBlank(message = "Обязательное поле")
     @Column(length = 64)

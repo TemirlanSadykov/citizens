@@ -4,8 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Data
@@ -20,18 +19,19 @@ public class Document extends AbstractEntity {
     @Column(length = 64)
     private String number;
 
-    @NotBlank(message = "Обязательное поле")
+    @Column
+    @Enumerated(EnumType.STRING)
     private Doctype doctype;
 
     @NotBlank(message = "Обязательное поле")
     @Column(length = 128)
     private String giver;
 
-    @NotBlank(message = "Обязательное поле")
+    @NotNull(message = "Обязательное поле")
     @Column
-    private LocalDateTime issue;
+    private Date issue;
 
-    @NotBlank(message = "Обязательное поле")
+    @NotNull(message = "Обязательное поле")
     @Column
-    private LocalDateTime expiration;
+    private Date expiration;
 }
