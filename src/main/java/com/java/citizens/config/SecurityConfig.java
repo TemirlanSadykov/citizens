@@ -35,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin()
                 .loginPage("/")
                 .failureUrl("/?error=true")
-                .defaultSuccessUrl("/default", true);
+                .defaultSuccessUrl("/user", true);
 
         http.logout()
                 .logoutUrl("/logout")
@@ -44,12 +44,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true);
 
         http.authorizeRequests()
-                .antMatchers("/default")
+                .antMatchers("/user")
                 .authenticated()
                 .antMatchers("/admin/**")
-                .hasRole(Constants.ROLE_ADMIN)
-                .antMatchers("/user/**")
-                .hasRole(Constants.ROLE_USER)
+                .hasAnyRole(Constants.ROLE_USER, Constants.ROLE_ADMIN)
                 .antMatchers("/info/**")
                 .hasAnyRole(Constants.ROLE_ADMIN, Constants.ROLE_USER);
 

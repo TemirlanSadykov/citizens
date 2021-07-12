@@ -1,10 +1,7 @@
 <#import "../partials/main.ftlh" as main>
 <@main.renderWith>
 <#--<@main.renderWith scripts=["scripts/.js"]>-->
-    <#if error??>
-        <h3>${error}</h3>
-        <a href="/default" class="btn btn-primary btn-block">Выйти</a>
-        <#else >
+
             <div class="mx-auto mt-3 w-50">
 
                 <h3 class="text-center">Ваша информация:</h3>
@@ -52,8 +49,7 @@
                     <label><h3>Дата окончания срока:</h3></label>
                     <p>${user.documentDTO.expiration}</p>
                 </div>
-                <a href="/default" class="btn btn-primary btn-block">Выйти</a>
+                <a href="/user" class="btn btn-primary btn-block">Выйти</a>
 
             </div>
-    </#if>
 </@main.renderWith>

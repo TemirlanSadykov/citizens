@@ -1,9 +1,6 @@
 <#import "../partials/main.ftlh" as main>
 <@main.renderWith>
 <#--<@main.renderWith scripts=["scripts/.js"]>-->
-    <#if error??>
-        <h3>${error}</h3>
-    <#else >
         <div class="mx-auto mt-3 w-50">
             <h3 class="text-center">Ваша информация:</h3>
             <div class="form-group">
@@ -51,5 +48,4 @@
                 <p>${user.documentDTO.expiration}</p>
             </div>
         </div>
-    </#if>
 </@main.renderWith>

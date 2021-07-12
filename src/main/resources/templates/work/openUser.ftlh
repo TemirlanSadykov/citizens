@@ -47,6 +47,6 @@
                 <label><h3>Дата окончания срока:</h3></label>
                 <p>${user.documentDTO.expiration}</p>
             </div>
-            <p><a class="btn btn-primary btn-block w-100" href="/default" role="button">В меню</a></p>
+            <p><a class="btn btn-primary btn-block w-100" href="/user" role="button">В меню</a></p>
         </div>
 </@main.renderWith>
