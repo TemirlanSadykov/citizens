@@ -26,6 +26,10 @@ public class UserService {
         return UserDTO.from(userRepo.findOne(QUser.user.login.eq(login)).get());
     }
 
+    public UserDTO getOneById(Long id) {
+        return UserDTO.from(userRepo.findOne(QUser.user.id.eq(id)).get());
+    }
+
     public List<RoleDTO> getRoles() {
         List<Role> roles = new ArrayList<Role>();
         roles = roleRepo.findAll();

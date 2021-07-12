@@ -2,7 +2,6 @@ package com.java.citizens.controller;
 
 import com.java.citizens.dto.DocumentDTO;
 import com.java.citizens.dto.UserDTO;
-import com.java.citizens.repository.UserRepo;
 import com.java.citizens.service.DocumentService;
 import com.java.citizens.service.PropertiesService;
 import com.java.citizens.service.UserService;
@@ -25,7 +24,6 @@ import java.security.Principal;
 @AllArgsConstructor
 public class UsersInfoController {
 
-    private final UserRepo userRepo;
     private final UserService userService;
     private final PropertiesService propertiesService;
     private final DocumentService documentService;
@@ -45,7 +43,7 @@ public class UsersInfoController {
     @GetMapping("/open/{id}")
     public ModelAndView openUser(Model model, Principal principal, @PathVariable Long id) {
         model.addAttribute("userName", principal.getName());
-        model.addAttribute("user", userService.getOne(userRepo.findById(id).get().getLogin()));
+        model.addAttribute("user", userService.getOne(userService.getOneById(id).getLogin()));
 
         return new ModelAndView("work/openUser");
     }
@@ -67,7 +65,7 @@ public class UsersInfoController {
     @GetMapping("/edit/info/{id}")
     public ModelAndView editUserInfo(Model model, Principal principal, @PathVariable Long id) {
         model.addAttribute("userName", principal.getName());
-        model.addAttribute("user", userService.getOne(userRepo.findById(id).get().getLogin()));
+        model.addAttribute("user", userService.getOne(userService.getOneById(id).getLogin()));
 
         return new ModelAndView("work/editUserInfo");
     }
@@ -87,7 +85,7 @@ public class UsersInfoController {
     @GetMapping("/edit/document/{id}")
     public ModelAndView editUserDocument(Model model, Principal principal, @PathVariable Long id) {
         model.addAttribute("userName", principal.getName());
-        model.addAttribute("user", userService.getOne(userRepo.findById(id).get().getLogin()));
+        model.addAttribute("user", userService.getOne(userService.getOneById(id).getLogin()));
         model.addAttribute("doctype", documentService.getDocumentType());
 
         return new ModelAndView("work/editUserDocument");

@@ -2,12 +2,9 @@ package com.java.citizens.controller;
 
 import com.java.citizens.dto.DocumentDTO;
 import com.java.citizens.dto.UserDTO;
-import com.java.citizens.entity.QDocument;
 import com.java.citizens.entity.QUser;
-import com.java.citizens.repository.DocumentRepo;
 import com.java.citizens.repository.UserRepo;
 import com.java.citizens.service.DocumentService;
-import com.java.citizens.service.PropertiesService;
 import com.java.citizens.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -26,13 +23,11 @@ import java.security.Principal;
 @Controller
 @RequestMapping("/info")
 @AllArgsConstructor
-public class WorkController {
+public class AdminInfoController {
 
     private final UserService userService;
     private final DocumentService documentService;
-    private final DocumentRepo documentRepo;
     private final UserRepo userRepo;
-    private final PropertiesService propertiesService;
 
     @GetMapping
     public ModelAndView info(Model model, Principal principal) {
@@ -82,12 +77,6 @@ public class WorkController {
             attributes.addFlashAttribute("errors", validationResult.getFieldErrors());
             return new ModelAndView("redirect:/info/document");
         }
-        if (documentRepo.findOne(QDocument.document.number.eq(documentDTO.getNumber())).isEmpty()) {
-            documentService.createDocument(documentDTO);
-            return new ModelAndView("redirect:/default");
-        } else {
-            attributes.addFlashAttribute("error", "Данный документ уже существует");
-            return new ModelAndView("redirect:/info/document");
-        }
+        return documentService.createDocument(documentDTO, attributes);
     }
 }

@@ -6,6 +6,8 @@ import com.java.citizens.repository.DocumentRepo;
 import com.java.citizens.repository.UserRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,21 +37,28 @@ public class DocumentService {
         return doctypes;
     }
 
-    public void createDocument(DocumentDTO documentDTO) {
+    public ModelAndView createDocument(DocumentDTO documentDTO, RedirectAttributes attributes) {
 
-        Document document = Document.builder()
-                .number(documentDTO.getNumber())
-                .doctype(Doctype.valueOf(documentDTO.getDoctypeName()))
-                .giver(documentDTO.getGiver())
-                .issue(Converter.convertStringToDate(documentDTO.getIssue()))
-                .expiration(Converter.convertStringToDate(documentDTO.getExpiration()))
-                .build();
+        if (documentRepo.findOne(QDocument.document.number.eq(documentDTO.getNumber())).isEmpty()) {
+            Document document = Document.builder()
+                    .number(documentDTO.getNumber())
+                    .doctype(Doctype.valueOf(documentDTO.getDoctypeName()))
+                    .giver(documentDTO.getGiver())
+                    .issue(Converter.convertStringToDate(documentDTO.getIssue()))
+                    .expiration(Converter.convertStringToDate(documentDTO.getExpiration()))
+                    .build();
 
-        documentRepo.save(document);
+            documentRepo.save(document);
 
-        User user = userRepo.findOne(QUser.user.login.eq(documentDTO.getLogin())).get();
-        user.setDocument(document);
-        userRepo.save(user);
+            User user = userRepo.findOne(QUser.user.login.eq(documentDTO.getLogin())).get();
+            user.setDocument(document);
+            userRepo.save(user);
+            return new ModelAndView("redirect:/default");
+        } else {
+            attributes.addFlashAttribute("error", "Данный документ уже существует");
+            return new ModelAndView("redirect:/info/document");
+        }
+
     }
 
     public void editUserDocument(DocumentDTO documentDTO, Long id) throws IllegalArgumentException {
