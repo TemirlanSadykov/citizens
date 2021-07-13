@@ -78,8 +78,14 @@ public class UserService {
 
     public Page<UserDTO> searchUser(String name, String birth, String number, String role, Pageable pageable) {
         QUser qUser = QUser.user;
-        if (name.equals("") && birth.equals("") && number.equals("")) {
-            return Converter.pageConverterForUsers(userRepo.findAll(QUser.user.role.name.eq(role)), pageable);
+        if (name.equals("")) {
+            if (number.equals("")){
+                if(birth.equals("")){
+                    return Converter.pageConverterForUsers(userRepo.findAll(QUser.user.role.name.eq(role)), pageable);
+                }
+                return Converter.pageConverterForUsers(userRepo.findAll(qUser.role.name.eq(role).andAnyOf(qUser.birth.eq(Converter.convertStringToDate(birth)), qUser.name.eq(name), qUser.document.number.eq(number))), pageable);
+            }
+            return Converter.pageConverterForUsers(userRepo.findAll(qUser.role.name.eq(role).andAnyOf(qUser.birth.eq(Converter.convertStringToDate(birth)), qUser.name.eq(name), qUser.document.number.eq(number))), pageable);
         }
         return Converter.pageConverterForUsers(userRepo.findAll(qUser.role.name.eq(role).andAnyOf(qUser.birth.eq(Converter.convertStringToDate(birth)), qUser.name.eq(name), qUser.document.number.eq(number))), pageable);
     }
