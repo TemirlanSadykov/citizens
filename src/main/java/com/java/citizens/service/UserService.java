@@ -23,6 +23,9 @@ public class UserService {
     private final PasswordEncoder encoder;
 
     public UserDTO getOne(String login) {
+        if (userRepo.findOne(QUser.user.login.eq(login)).isEmpty()){
+            return null;
+        }
         return UserDTO.from(userRepo.findOne(QUser.user.login.eq(login)).get());
     }
 
